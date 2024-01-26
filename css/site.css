@@ -1,0 +1,73 @@
+/*region sticky Footer*/
+html,
+body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex-grow: 1;
+}
+
+footer{
+    flex-shrink: 0;
+}
+/*#endregion stickey footer */
+
+nav, footer{
+    background-color: var(--ss-theme-900);
+    color: var(--ss-theme-100);
+}
+
+footer .bi{
+    color: var(--ss-theme-200);
+    font-size: 2rem;
+    padding-left: .5rem;
+    transition: color 0.25s;
+}
+
+footer .bi:hover{
+    color: var(--ss-theme-core);
+}
+
+.nav-link:hover{
+    color: var(--ss-theme-300)
+}
+
+.btn-primary {    
+    --bs-btn-bg: var(--ss-theme-600);
+    --bs-btn-border-color: var(--ss-theme-600);
+    --bs-btn-hover-bg: var(--ss-theme-700);
+    --bs-btn-hover-border-color: var(--ss-theme-700);  
+    --bs-btn-active-bg: var(--ss-theme-800);
+    --bs-btn-active-border-color: var(--ss-theme-800);
+}
+
+.btn-outline-primary {    
+    --bs-btn-color: var(--ss-theme-600);
+    --bs-btn-border-color: var(--ss-theme-600);
+    --bs-btn-hover-bg: var(--ss-theme-700);
+    --bs-btn-hover-border-color: var(--ss-theme-700);  
+    --bs-btn-active-bg: var(--ss-theme-800);
+    --bs-btn-active-border-color: var(--ss-theme-800);
+}
+
+.devicons{
+    font-size: 3.5rem;
+}
+
+.checklist{
+    list-style-type: none;
+}
+
+.checklist .bi{
+    color: var(--ss-theme-core);
+}
+
+.app-logo{
+    max-width: 450px;
+}
