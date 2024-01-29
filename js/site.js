@@ -11,9 +11,14 @@ async function getPopularMovies() {
 
     let data = await response.json();
 
-    displayMovies(data.results)
-       // .then(response => response.json())
-       // .then(data => displayMovies(data.results));
+    return data.results;
+    // .then(response => response.json())
+    // .then(data => displayMovies(data.results));
+}
+
+async function displayPopularMovies() {
+    let movies = await getPopularMovies();
+    displayMovies(movies);
 }
 
 function displayMovies(movies) {
@@ -40,6 +45,10 @@ function displayMovies(movies) {
         let infoButton = movieCard.querySelector('.btn-primary');
         infoButton.setAttribute('data-movieId', movie.id);
 
+        let favoriteButton = movieCard.querySelector('.btn-outline-primary');
+        favoriteButton.setAttribute('data-movieId', movie.id);
+
+
         // - add it to the page
         movieRow.appendChild(movieCard);
     });
@@ -48,6 +57,12 @@ function displayMovies(movies) {
 
 async function getMovieDetails(infoBtn) {
     const movieId = infoBtn.getAttribute("data-movieId");
+    let data = await getMovie(movieId);
+
+    displayMovieDetails(data);
+}
+
+async function getMovie(movieId) {
     const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}`;
 
     let response = await fetch(movieDetailsUrl, {
@@ -58,7 +73,7 @@ async function getMovieDetails(infoBtn) {
 
     let data = await response.json();
 
-    displayMovieDetails(data);
+    return data;
 }
 
 function displayMovieDetails(movieDetails) {
@@ -72,13 +87,13 @@ function displayMovieDetails(movieDetails) {
     moviePoster.setAttribute('src', 'https://image.tmdb.org/t/p/w500' + movieDetails.poster_path);
     movieTitle.textContent = movieDetails.title;
 
-    
+
     movieDetailsContainer.innerHTML = '';
 
-    
-    const detailsArray = [       
-        `Release Date: ${movieDetails.release_date}`,       
-        `Runtime: ${movieDetails.runtime} mins`,        
+
+    const detailsArray = [
+        `Release Date: ${movieDetails.release_date}`,
+        `Runtime: ${movieDetails.runtime} mins`,
         `Overview: ${movieDetails.overview}`
     ];
 
@@ -89,4 +104,56 @@ function displayMovieDetails(movieDetails) {
     });
 
     $('#movieModal').modal('show');
+}
+
+function displayFavoriteMovies() {
+    let movies = getFavoriteMovies();
+    displayMovies(movies);
+}
+
+async function addFavoriteMovie(btn) {
+    // save one new movie to our list of favorites
+    let movieId = btn.getAttribute('data-movieId');
+    let favorites = getFavoriteMovies();
+
+    let duplicateMovie = favorites.find(movie => movie.id == movieId);
+
+    if (duplicateMovie === undefined) {
+        let newFavorite = await getMovie(movieId);
+        favorites.push(newFavorite);
+
+        saveFavoriteMovies(favorites);
+    }
+}
+
+function removeFavoriteMovie(btn) {
+    // remove one movie from our list of favorites
+    let movieId = btn.getAttribute('data-movieId');
+
+    let favorites = getFavoriteMovies();
+    favorites = favorites.filter(movie => movie.id != movieId);
+
+    saveFavoriteMovies(favorites);
+    displayFavoriteMovies();
+}
+
+function saveFavoriteMovies(movies) {
+    // save a complete list of our favorite movies
+    let moviesAsString = JSON.stringify(movies);
+    localStorage.setItem('ss-favorite-movies', moviesAsString);
+}
+
+function getFavoriteMovies() {
+    // retrive our list of favorite movies
+    let favoriteMovies = localStorage.getItem('ss-favorite-movies');
+
+    if (favoriteMovies == null) {
+        favoriteMovies = [];
+        saveFavoriteMovies(favoriteMovies);
+    } else {
+        favoriteMovies = JSON.parse(favoriteMovies);
+    }
+    //return that list
+    return favoriteMovies;
+
 }
