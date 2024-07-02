@@ -53,16 +53,15 @@
                         </li>
                         <li class="nav-item">
                             <!--Change Me-->
-                            <a class="nav-link" href="#">The Repo</a>
+                            <a class="nav-link" href="https://github.com/sijo708/movieStore">The Repo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://sensational-griffin-35a826.netlify.app/">Portfolio</a>
+                            <a class="nav-link" href="https://sijosajan.com/">Portfolio</a>
                         </li>
                         <li class="nav-item">
                             <!--Change Me-->
-                            <a class="nav-link" href="#">Blog</a>
+                            <a class="nav-link" href="https://myblog-production-9fdb.up.railway.app/">Blog</a>
                         </li>
-
                     </ul>
 
                 </div>
@@ -234,26 +233,115 @@
                             return favoriteMovies;
                         
                         }
-                    </code>>
+                    </code>
                 </pre>
             </div>
 
             <!-- The code's explanation -->
             <div class="col-12 col-lg-4">
                 <p>The code is structured in 11 functions</p>
+                
                 <h5><code>getPopularMovies()</code></h5>
                 <p>
-                    The <code>getPopularMovies</code> function retrieves a list of popular movies from an API.
+                    The <code>getPopularMovies</code> function fetches a list of popular movies from the Movie Database API. 
+                    It uses the fetch method with a Bearer token for authorization to access the data. 
+                    The response is converted to JSON format. 
+                    This function returns the results, which are the popular movies. 
+                    The returned data is then used to display the movies on the page.
                 </p>
+                
                 <h5><code>displayPopularMovies()</code></h5>
                 <p>
-                    The <code>displayPopularMovies</code> function displays the list of popular movies.
+                    The <code>displayPopularMovies</code> function calls <code>getPopularMovies</code> to fetch the popular movies data. 
+                    It waits for the data to be fetched using the await keyword. 
+                    Once the data is retrieved, it calls <code>displayMovies</code> to render the movies on the web page. 
+                    This function serves as a bridge between fetching the data and displaying it. 
+                    It ensures that the movies are fetched and displayed asynchronously.
                 </p>
+                
                 <h5><code>displayMovies()</code></h5>
                 <p>
-                    The <code>displayMovies</code> function displays a list of movies on the page.
+                    The <code>displayMovies</code> function takes an array of movie objects and displays them on the web page. 
+                    It uses a template for each movie card and fills in the movie details like title, overview, and poster image. 
+                    The function then appends each movie card to the movie row container on the page. 
+                    It uses a forEach loop to iterate through the array of movies. 
+                    This function is responsible for dynamically generating and inserting HTML content for each movie.
+                </p>
+                
+                <h5><code>getMovieDetails(infoBtn)</code></h5>
+                <p>
+                    The <code>getMovieDetails</code> function fetches detailed information about a specific movie using its ID. 
+                    It retrieves the movie ID from a button's data attribute. 
+                    The function then calls <code>getMovie</code> to fetch the movie details from the API. 
+                    After fetching the details, it calls <code>displayMovieDetails</code> to display the information. 
+                    This function is triggered when a user clicks on a movie's info button.
+                </p>
+                
+                <h5><code>getMovie(movieId)</code></h5>
+                <p>
+                    The <code>getMovie</code> function fetches detailed information about a specific movie using its ID. 
+                    It constructs the API URL using the movie ID and sends a fetch request with the appropriate headers. 
+                    The response is converted to JSON format and returned. 
+                    This function is used to retrieve all necessary details about a movie. 
+                    The data fetched by this function is used to display detailed movie information on the page.
+                </p>
+                
+                <h5><code>displayMovieDetails(movieDetails)</code></h5>
+                <p>
+                    The <code>displayMovieDetails</code> function updates the HTML content of a modal to show detailed information about a movie. 
+                    It sets the modal title, poster image, and various movie details such as release date, runtime, and overview. 
+                    The function is called with the movie details object as a parameter. 
+                    It modifies the content of the modal window to reflect the movie details. 
+                    Finally, it shows the modal window using jQuery's modal method.
+                </p>
+                
+                <h5><code>displayFavoriteMovies()</code></h5>
+                <p>
+                    The <code>displayFavoriteMovies</code> function retrieves the user's favorite movies from local storage. 
+                    It calls <code>getFavoriteMovies</code> to get the list of favorite movies. 
+                    The function then uses <code>displayMovies</code> to display these favorite movies on the page. 
+                    This allows users to see their saved favorite movies. 
+                    It ensures that the favorites list is displayed when needed.
+                </p>
+                
+                <h5><code>addFavoriteMovie(btn)</code></h5>
+                <p>
+                    The <code>addFavoriteMovie</code> function adds a movie to the user's list of favorite movies. 
+                    It retrieves the movie ID from the button's data attribute. 
+                    The function checks if the movie is already in the favorites list to avoid duplicates. 
+                    If the movie is not a duplicate, it fetches the movie details and adds the movie to the favorites list. 
+                    Finally, it saves the updated list of favorite movies to local storage.
+                </p>
+                
+                <h5><code>removeFavoriteMovie(btn)</code></h5>
+                <p>
+                    The <code>removeFavoriteMovie</code> function removes a movie from the user's list of favorite movies. 
+                    It retrieves the movie ID from the button's data attribute. 
+                    The function filters out the movie with the specified ID from the favorites list. 
+                    It then saves the updated list of favorite movies to local storage. 
+                    Finally, it updates the display to reflect the changes.
+                </p>
+                
+                <h5><code>saveFavoriteMovies(movies)</code></h5>
+                <p>
+                    The <code>saveFavoriteMovies</code> function saves the user's list of favorite movies to local storage. 
+                    It converts the movies array to a JSON string. 
+                    The function then stores this string in local storage with the key 'ss-favorite-movies'. 
+                    This ensures that the favorite movies list persists between sessions. 
+                    It allows the user to retain their favorite movies even after closing the browser.
+                </p>
+                
+                <h5><code>getFavoriteMovies()</code></h5>
+                <p>
+                    The <code>getFavoriteMovies</code> function retrieves the user's list of favorite movies from local storage. 
+                    It checks if the list exists in local storage. 
+                    If not, it initializes an empty list and saves it to local storage. 
+                    The function returns the list of favorite movies. 
+                    This function ensures that the favorite movies list can be accessed whenever needed.
                 </p>
             </div>
+            
+            
         </div>
     </main>
 
